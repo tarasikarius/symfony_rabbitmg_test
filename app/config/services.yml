@@ -30,6 +30,7 @@ services:
         tags: ['controller.service_arguments']
 
     # add more services, or override services that need manual wiring
-    # AppBundle\Service\ExampleService:
-    #     arguments:
-    #         $someArgument: 'some_value'
+    AppBundle\Command\UrlParserClientCommand:
+        arguments:
+            - "@old_sound_rabbit_mq.parse_url_producer"
+        public: true

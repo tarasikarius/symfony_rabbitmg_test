@@ -1,13 +1,51 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
+
+    <title>{% block title %}SRTest{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body>
+{% block main_menu %}
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Sym+RabbitTest</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="{{ path('hello') }}">(1)Hello Producer</a></li>
+                <li><a href="{{ path('work') }}">(2)Work Producer</a></li>
+                <li><a href="{{ path('logs') }}">(3)Logs Producer</a></li>
+                <li><a href="{{ path('direct') }}">(4)Direct Logs Producer</a></li>
+                <li><a href="#">(5) Producer</a></li>
+            </ul>
+        </div>
+    </nav>
+{% endblock main_menu %}
+
+<div class="container">
+
+    {% block body %}{% endblock %}
+
+</div><!-- /.container -->
+
+<footer class="container-fluid text-center bg-grey">
+    <p>Test Symfony 3.3 à la blog </p>
+</footer>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% block javascript %}{% endblock %}
+
+</body>
 </html>

@@ -37,6 +37,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes:
+        - bootstrap_3_layout.html.twig
 
 # Doctrine Configuration
 doctrine:
@@ -76,7 +78,7 @@ old_sound_rabbit_mq:
             user:     "%rabbit_mq_user%"
             password: "%rabbit_mq_password%"
             vhost:    "%rabbit_mq_vhost%"
-            lazy:     false
+            lazy:     true
             connection_timeout: 3
             read_write_timeout: 3
     producers:
@@ -84,9 +86,39 @@ old_sound_rabbit_mq:
             connection:       default
             exchange_options: {name: 'parse-url', type: direct}
             queue_options:    {name: 'parse_url'}
+        hello:
+            connection:       default
+            queue_options:    {name: 'hello'}
+        work:
+            connection:       default
+            queue_options:    {name: 'work'}
+        logs:
+            connection:       default
+            exchange_options: {name: 'logs_ex', type: fanout}
+        direct_logs:
+            connection:       default
+            exchange_options: {name: 'direct_ex', type: direct}
     consumers:
         parse_url:
             connection:       default
             exchange_options: {name: 'parse-url', type: direct}
             queue_options:    {name: 'parse_url'}
             callback:         AppBundle\Service\ParseUrlServerService
+        hello:
+            connection:       default
+            queue_options:    {name: 'hello'}
+            callback:         AppBundle\Consumers\HelloConsumer
+        work:
+            connection:       default
+            queue_options:    {name: 'work'}
+            callback:         AppBundle\Consumers\WorkConsumer
+            qos_options:      {prefetch_size: 0, prefetch_count: 1, global: false}
+    anon_consumers:
+        logs:
+            connection:       default
+            exchange_options: {name: 'logs_ex', type: fanout}
+            callback:         AppBundle\Consumers\LogsConsumer
+        direct_logs:
+            connection:       default
+            exchange_options: {name: 'direct_ex', type: direct}
+            callback:         AppBundle\Consumers\DirectLogsConsumer

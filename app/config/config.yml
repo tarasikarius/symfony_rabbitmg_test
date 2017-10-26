@@ -98,6 +98,9 @@ old_sound_rabbit_mq:
         direct_logs:
             connection:       default
             exchange_options: {name: 'direct_ex', type: direct}
+        topic_logs:
+            connection:       default
+            exchange_options: {name: 'topic_ex', type: topic}
     consumers:
         parse_url:
             connection:       default
@@ -122,3 +125,7 @@ old_sound_rabbit_mq:
             connection:       default
             exchange_options: {name: 'direct_ex', type: direct}
             callback:         AppBundle\Consumers\DirectLogsConsumer
+        topic_logs:
+            connection:       default
+            exchange_options: {name: 'topic_ex', type: topic}
+            callback:         AppBundle\Consumers\TopicLogsConsumer

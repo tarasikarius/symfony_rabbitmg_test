@@ -82,10 +82,6 @@ old_sound_rabbit_mq:
             connection_timeout: 3
             read_write_timeout: 3
     producers:
-        parse_url:
-            connection:       default
-            exchange_options: {name: 'parse-url', type: direct}
-            queue_options:    {name: 'parse_url'}
         hello:
             connection:       default
             queue_options:    {name: 'hello'}
@@ -102,11 +98,6 @@ old_sound_rabbit_mq:
             connection:       default
             exchange_options: {name: 'topic_ex', type: topic}
     consumers:
-        parse_url:
-            connection:       default
-            exchange_options: {name: 'parse-url', type: direct}
-            queue_options:    {name: 'parse_url'}
-            callback:         AppBundle\Service\ParseUrlServerService
         hello:
             connection:       default
             queue_options:    {name: 'hello'}
@@ -129,3 +120,17 @@ old_sound_rabbit_mq:
             connection:       default
             exchange_options: {name: 'topic_ex', type: topic}
             callback:         AppBundle\Consumers\TopicLogsConsumer
+    rpc_clients:
+        parse_url:
+            connection: default
+            unserializer: json_decode
+            lazy: true
+            direct_reply_to: false
+    rpc_servers:
+        parse_url:
+            connection: default
+            callback:   AppBundle\Service\ParseUrlServerService
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+            exchange_options: {name: parse_url, type: direct}
+            queue_options: {name: parse_url_queue, durable: false, auto_delete: true}
+            serializer: json_encode

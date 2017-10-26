@@ -44,16 +44,16 @@ class UrlParserClientCommand extends Command
      * @param Producer $producer
      * @param string $name
      */
-    public function __construct(Producer $producer, string $name = null){
-        $this->producer = $producer;
-        $channel = $this->producer->getChannel();
-
-        list($this->callbackQueue, ,) = $channel->queue_declare('', false, false, true, false);
-        $channel->basic_consume($this->callbackQueue, '', false, false, false, false, [$this, 'onResponse']);
-
-        $this->channel = $channel;
-        parent::__construct($name);
-    }
+//    public function __construct(Producer $producer, string $name = null){
+//        $this->producer = $producer;
+//        $channel = $this->producer->getChannel();
+//
+//        list($this->callbackQueue, ,) = $channel->queue_declare('', false, false, true, false);
+//        $channel->basic_consume($this->callbackQueue, '', false, false, false, false, [$this, 'onResponse']);
+//
+//        $this->channel = $channel;
+//        parent::__construct($name);
+//    }
 
     /**
      * {@inheritdoc}
@@ -72,20 +72,20 @@ class UrlParserClientCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->correlationId = uniqid();
-
-        $message = json_encode(['url' => $input->getArgument('url')]);
-
-        $this->producer->publish(serialize($message), '', [
-            'correlation_id' => $this->correlationId,
-            'reply_to' => $this->callbackQueue
-        ]);
-
-        while (!$this->response) {
-            $this->channel->wait();
-        }
-
-        $output->writeln($this->response);
+//        $this->correlationId = uniqid();
+//
+//        $message = json_encode(['url' => $input->getArgument('url')]);
+//
+//        $this->producer->publish(serialize($message), '', [
+//            'correlation_id' => $this->correlationId,
+//            'reply_to' => $this->callbackQueue
+//        ]);
+//
+//        while (!$this->response) {
+//            $this->channel->wait();
+//        }
+//
+//        $output->writeln($this->response);
 
     }
 

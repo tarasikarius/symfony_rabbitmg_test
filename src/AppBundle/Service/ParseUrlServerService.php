@@ -3,6 +3,7 @@
 namespace AppBundle\Service;
 
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
+use OldSound\RabbitMqBundle\RabbitMq\RpcServer;
 use PhpAmqpLib\Message\AMQPMessage;
 
 /**
@@ -21,14 +22,7 @@ class ParseUrlServerService implements ConsumerInterface
 
         echo sprintf ("received url: '%s'\n", $url);
 
-        $content = $this->getContentFromUrl($url);
-        $msg = new AMQPMessage($content, [
-            'correlation_id' => $message->get('correlation_id')
-        ]);
-
-        $route = $message->get('reply_to');
-        $channel = $message->delivery_info['channel'];
-        $channel->basic_publish($msg, '', $route);
+        return $this->getContentFromUrl($url);
     }
 
     /**

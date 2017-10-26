@@ -6,7 +6,7 @@ use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 
 /**
- * Class WorkConsumer
+ * Class LogsConsumer
  * @package AppBundle\Consumers
  *
  * Consumer callback for the 3rd part of a rabbitMQ tutorial(https://www.rabbitmq.com/tutorials/tutorial-three-php.html)

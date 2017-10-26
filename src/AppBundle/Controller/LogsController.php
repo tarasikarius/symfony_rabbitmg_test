@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class WorkController
+ * Class LogsController
  * @package AppBundle\Controller
  *
  * Producer for the 3nd part of a rabbitMQ tutorial(https://www.rabbitmq.com/tutorials/tutorial-three-php.html)

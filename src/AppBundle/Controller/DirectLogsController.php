@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class WorkController
+ * Class DirectLogsController
  * @package AppBundle\Controller
  *
  * Producer for the 4th part of a rabbitMQ tutorial(https://www.rabbitmq.com/tutorials/tutorial-four-php.html)
@@ -41,19 +41,14 @@ class DirectLogsController extends Controller
         if ($form->isSubmitted()) {
             $data = $form->getData();
             $severity = $data['severity'];
-            $body = $data['message'];
-            $message = json_encode([
-                'body' => $body,
-                'severity' => $severity,
-            ]);
-
+            $message = $data['message'];
 
             $producer = $this->get('old_sound_rabbit_mq.direct_logs_producer');
             $producer->publish($message, $severity);
 
             $this->addFlash(
                 'success',
-                sprintf('Sent %s: "%s"', $severity, $body)
+                sprintf('Sent %s: "%s"', $severity, $message)
             );
         }
 
